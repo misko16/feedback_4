@@ -1,21 +1,16 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import ContactForm from "./ContactForm";
 import Filter from "./Filter";
 import ContactList from "./ContactList";
 
 const Phonebook = () => {
-  const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState("");
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
-
-  useEffect(() => {
+  const [contacts, setContacts] = useState(() => {
     const storageContacts = localStorage.getItem("contacts");
-    if (storageContacts) {
-      setContacts(JSON.parse(storageContacts));
-    }
-  }, []);
+    return storageContacts ? JSON.parse(storageContacts) : [];
+  });
+  
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     localStorage.setItem("contacts", JSON.stringify(contacts));
@@ -30,28 +25,22 @@ const Phonebook = () => {
       alert(`${name} is already in contacts.`);
       return;
     }
-
-    const id = nanoid();
-    const newContact = { id, name, number };
-    setContacts([...contacts, newContact]);
-    setName("");
-    setNumber("");
+  
+    setContacts((prevState) => {
+      const id = nanoid();
+      const newContact = { id, name, number };
+      return [...prevState, newContact];
+    });
   };
+  
 
   const deleteContact = (contactId) => {
-    setContacts(contacts.filter((contact) => contact.id !== contactId));
+    setContacts((prevState) => prevState.filter((contact) => contact.id !== contactId));
   };
+  
 
   const handleFilterChange = (e) => {
     setFilter(e.target.value);
-  };
-
-  const handleInputChange = (inputName, inputValue) => {
-    if (inputName === "name") {
-      setName(inputValue);
-    } else if (inputName === "number") {
-      setNumber(inputValue);
-    }
   };
 
   const filteredContacts = contacts.filter((contact) =>
@@ -62,10 +51,8 @@ const Phonebook = () => {
     <div>
       <h1>Phonebook</h1>
       <ContactForm
-        onInputChange={handleInputChange}
-        onSubmit={() => addContact(name, number)}
-        name={name}
-        number={number}
+        contacts={contacts}
+        onAddContact={addContact}
       />
       <h2>Contacts</h2>
       <Filter value={filter} onChange={handleFilterChange} />
