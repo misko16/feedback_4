@@ -25,17 +25,16 @@ const Phonebook = () => {
       alert(`${name} is already in contacts.`);
       return;
     }
-  
-    setContacts((prevState) => {
-      const id = nanoid();
-      const newContact = { id, name, number };
-      return [...prevState, newContact];
-    });
+    setContacts((prevState) => [
+      ...prevState,
+      { id: nanoid(), name, number },
+    ]);
   };
-  
 
   const deleteContact = (contactId) => {
-    setContacts((prevState) => prevState.filter((contact) => contact.id !== contactId));
+    setContacts((prevState) =>
+      prevState.filter((contact) => contact.id !== contactId)
+    );
   };
   
 
@@ -50,10 +49,7 @@ const Phonebook = () => {
   return (
     <div>
       <h1>Phonebook</h1>
-      <ContactForm
-        contacts={contacts}
-        onAddContact={addContact}
-      />
+      <ContactForm contacts={contacts} onAddContact={addContact} />
       <h2>Contacts</h2>
       <Filter value={filter} onChange={handleFilterChange} />
       <ContactList contacts={filteredContacts} onDeleteContact={deleteContact} />
