@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import ContactForm from "./ContactForm";
-import Filter from "./Filter";
-import ContactList from "./ContactList";
+import Filter from "../refactoring/Filter";
+import ContactList from "../refactoring/ContactList";
 
 const Phonebook = () => {
   const [contacts, setContacts] = useState(() => {

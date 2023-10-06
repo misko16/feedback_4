@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {ContactFormRefactor} from "refactoring/contactForm";
 
-function ContactForm({ contacts, onAddContact }) {
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
+  function ContactForm({  onAddContact }) {
+
+  const name = useSelector((state) => state.name);
+  const number = useSelector((state) => state.number);
+  const dispatch = useDispatch();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "name") {
-      setName(value);
+      dispatch({type: 'contactForm/name', payload: ''});                            value
     } else if (name === "number") {
       setNumber(value);
     }
@@ -26,26 +29,12 @@ function ContactForm({ contacts, onAddContact }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="name"
-        value={name}
-        onChange={handleInputChange}
-        placeholder="Enter name"
-        required
-      />
-      <input
-        type="tel"
-        name="number"
-        pattern="[0-9]+"
-        value={number}
-        onChange={handleInputChange}
-        placeholder="Enter phone number"
-        required
-      />
-      <button type="submit">Add contact</button>
-    </form>
+    <ContactFormRefactor
+    handleInputChange={handleInputChange}
+    handleSubmit={handleSubmit}
+    name={name}
+    number={number}
+    />
   );
 }
 
