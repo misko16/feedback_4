@@ -1,18 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
-import {ContactFormRefactor} from "refactoring/contactForm";
+import ContactFormRefactor from "refactoring/contactForm";
+import { setName, setNumber } from "redux/parts/contactFormReduser";
 
-  function ContactForm({  onAddContact }) {
-
-  const name = useSelector((state) => state.name);
-  const number = useSelector((state) => state.number);
+function ContactForm({ onAddContact }) {
+  const name = useSelector(
+    (state) => state.contactForm.name);
+  const number = useSelector(
+    (state) => state.contactForm.number);
   const dispatch = useDispatch();
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "name") {
-      dispatch({type: 'contactForm/name', payload: ''});                            value
+      dispatch(setName(value));
     } else if (name === "number") {
-      setNumber(value);
+      dispatch(setNumber(value));
     }
   };
 
@@ -24,8 +27,6 @@ import {ContactFormRefactor} from "refactoring/contactForm";
     }
     
     onAddContact(name, number);
-    setName("");
-    setNumber("");
   };
 
   return (
