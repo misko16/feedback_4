@@ -3,6 +3,7 @@ import ContactFormRefactor from "refactoring/contactForm";
 import { setName, setNumber } from "redux/parts/contactFormReduser";
 
 function ContactForm({ onAddContact }) {
+ 
   const name = useSelector(
     (state) => state.contactForm.name);
   const number = useSelector(
