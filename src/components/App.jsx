@@ -1,16 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { nanoid } from "nanoid";
 import ContactForm from "./ContactForm";
 import Filter from "../refactoring/Filter";
 import ContactList from "../refactoring/ContactList";
+import { useSelector, useDispatch } from "react-redux";
+import { setContacts, setFilter, addForm } from "redux/parts/contactsReduser";
 
 const Phonebook = () => {
-  const [contacts, setContacts] = useState(() => {
-    const storageContacts = localStorage.getItem("contacts");
-    return storageContacts ? JSON.parse(storageContacts) : [];
-  });
-  
-  const [filter, setFilter] = useState("");
+  const contacts = useSelector((state) => state.contacts.data);
+  const filter = useSelector((state) => state.contacts.filter);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     localStorage.setItem("contacts", JSON.stringify(contacts));
@@ -25,21 +24,17 @@ const Phonebook = () => {
       alert(`${name} is already in contacts.`);
       return;
     }
-    setContacts((prevState) => [
-      ...prevState,
-      { id: nanoid(), name, number },
-    ]);
-  };
-
-  const deleteContact = (contactId) => {
-    setContacts((prevState) =>
-      prevState.filter((contact) => contact.id !== contactId)
-    );
+    dispatch(addForm({ id: nanoid(), name, number }));
   };
   
+  
+
+  const deleteContact = (contactId) => {
+    dispatch(setContacts(contacts.filter((contact) => contact.id !== contactId)));
+  };
 
   const handleFilterChange = (e) => {
-    setFilter(e.target.value);
+    dispatch(setFilter(e.target.value));
   };
 
   const filteredContacts = contacts.filter((contact) =>
@@ -49,7 +44,7 @@ const Phonebook = () => {
   return (
     <div>
       <h1>Phonebook</h1>
-      <ContactForm contacts={contacts} onAddContact={addContact} />
+      <ContactForm onAddContact={addContact} />
       <h2>Contacts</h2>
       <Filter value={filter} onChange={handleFilterChange} />
       <ContactList contacts={filteredContacts} onDeleteContact={deleteContact} />
