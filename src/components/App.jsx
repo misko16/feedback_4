@@ -4,7 +4,8 @@ import ContactForm from "./ContactForm";
 import Filter from "../refactoring/Filter";
 import ContactList from "../refactoring/ContactList";
 import { useSelector, useDispatch } from "react-redux";
-import { setContacts, setFilter, addForm } from "redux/parts/contactsReduser";
+import { setContacts, setFilter, addForm } from "../redux/parts/contactsReduser";
+import { resetForm } from "redux/parts/contactFormReduser";
 
 const Phonebook = () => {
   const contacts = useSelector((state) => state.contacts.data);
@@ -25,6 +26,7 @@ const Phonebook = () => {
       return;
     }
     dispatch(addForm({ id: nanoid(), name, number }));
+    dispatch(resetForm());
   };
   
   const deleteContact = (contactId) => {

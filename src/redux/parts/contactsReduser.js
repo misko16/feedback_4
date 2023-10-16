@@ -1,4 +1,4 @@
-const { createSlice } = require("@reduxjs/toolkit");
+import { createSlice } from "@reduxjs/toolkit";
 
 const contactsReduser = createSlice({
     name: 'contacts', 
@@ -6,7 +6,7 @@ const contactsReduser = createSlice({
         data: [],
         filter:'',
     },
-    reducer: {
+    reducers: {
         setContacts: (state, action) => {
             state.data = action.payload;
         },

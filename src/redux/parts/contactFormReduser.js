@@ -7,6 +7,10 @@ const contactFormReduse = createSlice({
     number: '',
   },
   reducers: {
+    resetForm: (state) => {
+      state.name = '';
+      state.number =  '';
+    },
     setName: (state, action) => {
       state.name = action.payload;
     },
@@ -16,5 +20,5 @@ const contactFormReduse = createSlice({
   },
 });
 
-export const { setName, setNumber } = contactFormReduse.actions;
+export const { setName, setNumber, resetForm} = contactFormReduse.actions;
 export default contactFormReduse.reducer;
