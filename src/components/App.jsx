@@ -27,8 +27,6 @@ const Phonebook = () => {
     dispatch(addForm({ id: nanoid(), name, number }));
   };
   
-  
-
   const deleteContact = (contactId) => {
     dispatch(setContacts(contacts.filter((contact) => contact.id !== contactId)));
   };
