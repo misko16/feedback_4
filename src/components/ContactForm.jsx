@@ -1,22 +1,16 @@
-import { useDispatch, useSelector } from "react-redux";
-import ContactFormRefactor from "refactoring/contactForm";
-import { setName, setNumber } from "redux/parts/contactFormReduser";
+import React, { useState } from "react";
+import ContactFormRefactor from "refactoring/ContactFormRefactor";
 
 function ContactForm({ onAddContact }) {
- 
-  const name = useSelector(
-    (state) => state.contactForm.name);
-  const number = useSelector(
-    (state) => state.contactForm.number);
-  const dispatch = useDispatch();
-
+  const [name, setName] = useState("");
+  const [number, setNumber] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "name") {
-      dispatch(setName(value));
+      setName(value);
     } else if (name === "number") {
-      dispatch(setNumber(value));
+      setNumber(value);
     }
   };
 
@@ -26,16 +20,18 @@ function ContactForm({ onAddContact }) {
       alert("Please fill in all fields.");
       return;
     }
-    
+
     onAddContact(name, number);
+    setName("");
+    setNumber("");
   };
 
   return (
     <ContactFormRefactor
-    handleInputChange={handleInputChange}
-    handleSubmit={handleSubmit}
-    name={name}
-    number={number}
+      name={name}
+      number={number}
+      handleSubmit={handleSubmit}
+      handleInputChange={handleInputChange}
     />
   );
 }
