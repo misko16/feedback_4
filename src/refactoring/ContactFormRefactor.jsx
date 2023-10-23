@@ -25,4 +25,11 @@ const ContactFormRefactor = ({
       </form>
     );
 }
+ContactFormRefactor.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  number: PropTypes.string.isRequired,
+};
+
 export default ContactFormRefactor;

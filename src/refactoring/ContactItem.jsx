@@ -15,5 +15,9 @@ import React from 'react';
       </li>
     );
   }
-
+  ContactItem.propTypes = {
+    contact: PropTypes.object.isRequired,
+    onDeleteContact: PropTypes.func.isRequired,
+  };
+  
   export default ContactItem;
