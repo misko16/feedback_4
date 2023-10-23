@@ -8,8 +8,8 @@ import {addContact, deleteContact, setFilter} from "redux/appRedusers";
 
 
 const Phonebook = () => {
-  const contacts = useSelector((state) => state.appReduser.contacts);
-  const filter = useSelector((state) => state.appReduser.filter);
+  const contacts = useSelector(state => state.appReduser.contacts);
+  const filter = useSelector(state => state.appReduser.filter);
   const dispatch = useDispatch();
 
   useEffect(() => {
