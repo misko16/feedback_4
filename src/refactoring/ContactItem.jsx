@@ -1,6 +1,6 @@
 
   const ContactItem = ({contact, onDeleteContact}) => {
-    const {name, number} = contact
+    const {name, number} = contact;
     const handleDelete = () => {
       onDeleteContact(contact.id);
     };
