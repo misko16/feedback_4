@@ -1,3 +1,5 @@
+import React from 'react';
+
 const ContactFormRefactor = ({
     handleSubmit, handleInputChange, name , number}) => {
     return(

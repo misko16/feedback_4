@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+
 import ContactFormRefactor from "refactoring/ContactFormRefactor";
+import PropTypes from 'prop-types'; 
 
 const ContactForm = ({ onAddContact }) => {
   const [name, setName] = useState("");
@@ -35,6 +36,10 @@ const ContactForm = ({ onAddContact }) => {
       handleInputChange={handleInputChange}
     />
   );
+};
+
+ContactForm.propTypes = {
+  onAddContact: PropTypes.func.isRequired,
 };
 
 export default ContactForm;

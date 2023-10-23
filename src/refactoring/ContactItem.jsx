@@ -1,3 +1,4 @@
+import React from 'react';
 
   const ContactItem = ({contact, onDeleteContact}) => {
     const {name, number} = contact;
