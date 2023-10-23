@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
+
 import ContactForm from "./ContactForm";
 import Filter from "../refactoring/Filter";
 import ContactList from "../refactoring/ContactList";
+import { useDispatch } from "react-redux";
 
 const Phonebook = () => {
+  const dispatch = useDispatch();
+  
   const [contacts, setContacts] = useState(() => {
     const storageContacts = localStorage.getItem("contacts");
     return storageContacts ? JSON.parse(storageContacts) : [];
