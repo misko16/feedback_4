@@ -1,50 +1,32 @@
 import { useEffect, useState } from "react";
-import { nanoid } from "nanoid";
+import { useDispatch, useSelector } from "react-redux";
 
 import ContactForm from "./ContactForm";
 import Filter from "../refactoring/Filter";
 import ContactList from "../refactoring/ContactList";
-import { useDispatch } from "react-redux";
+import {addContact, deleteContact, setFilter} from "redux/appRedusers";
+
 
 const Phonebook = () => {
+  const contacts = useSelector((state) => state.appReduser.contacts);
+  const filter = useSelector((state) => state.appReduser.filter);
   const dispatch = useDispatch();
-  
-  const [contacts, setContacts] = useState(() => {
-    const storageContacts = localStorage.getItem("contacts");
-    return storageContacts ? JSON.parse(storageContacts) : [];
-  });
-  
-  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     localStorage.setItem("contacts", JSON.stringify(contacts));
   }, [contacts]);
 
-  const addContact = (name, number) => {
-    const nameLower = name.toLowerCase();
-    const existingContact = contacts.find(
-      (contact) => contact.name.toLowerCase() === nameLower
-    );
-    if (existingContact) {
-      alert(`${name} is already in contacts.`);
-      return;
-    }
-  
-    setContacts((prevState) => {
-      const id = nanoid();
-      const newContact = { id, name, number };
-      return [...prevState, newContact];
-    });
-  };
-  
+  const handleaddContact = (name, number) => {
+    dispatch(addContact({name, number}));
+  };  
 
-  const deleteContact = (contactId) => {
-    setContacts((prevState) => prevState.filter((contact) => contact.id !== contactId));
+  const handledeleteContact = (contactId) => {
+   dispatch(deleteContact(contactId));
   };
   
 
   const handleFilterChange = (e) => {
-    setFilter(e.target.value);
+    dispatch(setFilter(e.target.value));
   };
 
   const filteredContacts = contacts.filter((contact) =>
@@ -56,11 +38,11 @@ const Phonebook = () => {
       <h1>Phonebook</h1>
       <ContactForm
         contacts={contacts}
-        onAddContact={addContact}
+        onAddContact={handleaddContact}
       />
       <h2>Contacts</h2>
       <Filter value={filter} onChange={handleFilterChange} />
-      <ContactList contacts={filteredContacts} onDeleteContact={deleteContact} />
+      <ContactList contacts={filteredContacts} onDeleteContact={handledeleteContact} />
     </div>
   );
 };

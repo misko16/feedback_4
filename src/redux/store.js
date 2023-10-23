@@ -11,10 +11,10 @@
     } from 'redux-persist';
     import storage from 'redux-persist/lib/storage';
 
-    import contactFormReducer from "./appRedusers"; 
+    import appRedusers from "./appRedusers";
    
     const rootReducer = combineReducers({
-        contactForm: contactFormReducer,
+        appReduser: appRedusers,
     });
 
     const persistConfig = {

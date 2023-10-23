@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-
 import ContactFormRefactor from "refactoring/ContactFormRefactor";
 
-function ContactForm({ onAddContact }) {
+const ContactForm = ({ onAddContact }) => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
-
-  const dispatch = useDispatch(); 
-
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -22,7 +18,7 @@ function ContactForm({ onAddContact }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name || !number) {
-      alert("Please fill in all fiends.");
+      alert("Please fill in all fields.");
       return;
     }
 
@@ -39,6 +35,6 @@ function ContactForm({ onAddContact }) {
       handleInputChange={handleInputChange}
     />
   );
-}
+};
 
 export default ContactForm;

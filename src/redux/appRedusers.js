@@ -1,23 +1,33 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, nanoid } from "@reduxjs/toolkit";
 
-const contactFormReducers = createSlice({
-    name: 'contactForm',
-    initialState: {
-        name: [],
-        number:[],
+const appReducers = createSlice({
+  name: 'appReducer',
+  initialState: {
+    contacts: [],
+    filter: '',
+  },
+  reducers: {
+    addContact: (state, action) => {
+      const { name, number } = action.payload;
+      const existingContact = state.contacts.find(
+        (contact) => contact.name.toLowerCase() === name.toLowerCase()
+      );
+      if (existingContact) {
+        alert(`${name} is already in contacts.`);
+        return;
+      }
+      const id = nanoid();
+      state.contacts.push({ name, number, id });
     },
-    reducers:{
-        addContact: (state, action) => {
-            const { name, number } = action.payload;
-            state.name.push(name);
-            state.number.push(number);
-        },
-        clearContact: (state) => {
-            state.name = [];
-            state.number = [];
-        }
+    deleteContact: (state, action) => {
+      const contactId = action.payload;
+      state.contacts = state.contacts.filter((contact) => contact.id !== contactId);
     },
+    setFilter: (state, action) => {
+      state.filter = action.payload;
+    },
+  },
 });
 
-export const { addContact, clearContact } = contactFormReducers.actions;
-export default contactFormReducers.reducer;
+export const { addContact, deleteContact, setFilter } = appReducers.actions;
+export default appReducers.reducer;
