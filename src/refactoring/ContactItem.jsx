@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
     };
   
     return (
-      <li>
+      <li className='contactItem '>
         {name}: {number}
         <button type="button" onClick={handleDelete}>
           Delete

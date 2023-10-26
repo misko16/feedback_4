@@ -5,7 +5,7 @@ import ContactItem from './ContactItem';
 
 function ContactList({ contacts, onDeleteContact }) {
   return (
-    <ul>
+    <ul className='contactList '>
       {contacts.map((contact) => (
         <ContactItem key={contact.id} contact={contact} onDeleteContact={onDeleteContact} />
       ))}

@@ -5,7 +5,7 @@ const ContactFormRefactor = ({
     handleSubmit, handleInputChange, name , number}) => {
     return(
         <form onSubmit={handleSubmit}>
-        <input
+        <input 
           type="text"
           name="name"
           value={name}

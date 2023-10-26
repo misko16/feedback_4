@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 const Filter = ({ value, onChange }) => {
   return (
     <input
+    className='filterInput '
       type="text"
       value={value}
       onChange={onChange}

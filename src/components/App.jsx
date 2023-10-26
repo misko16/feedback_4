@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-
 import ContactForm from "./ContactForm";
 import Filter from "../refactoring/Filter";
 import ContactList from "../refactoring/ContactList";
@@ -35,7 +34,7 @@ const Phonebook = () => {
   );
 
   return (
-    <div>
+    <div className='container'>
       <h1>Phonebook</h1>
       <ContactForm
         contacts={contacts}
