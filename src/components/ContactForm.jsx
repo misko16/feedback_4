@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-
-import ContactFormRefactor from "refactoring/ContactFormRefactor";
 import PropTypes from 'prop-types'; 
+
+import ContactFormRefactor from "../refactoring/ContactFormRefactor";
 
 const ContactForm = ({ onAddContact }) => {
   const [name, setName] = useState("");
@@ -23,7 +23,7 @@ const ContactForm = ({ onAddContact }) => {
       return;
     }
 
-    onAddContact(name, number);
+    onAddContact({ name, number });
     setName("");
     setNumber("");
   };

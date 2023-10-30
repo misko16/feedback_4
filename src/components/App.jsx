@@ -1,28 +1,27 @@
-import React from 'react';
-import { useSelector, useDispatch} from 'react-redux';
-import { useEffect } from 'react';
-
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import ContactForm from "./ContactForm";
 import Filter from "../refactoring/Filter";
 import ContactList from "../refactoring/ContactList";
-import { setFilter } from '../redux/appRedusers';
-import {addContact, deleteContact, fetchContacts} from "../servise/ApiRequired"  
+import { addContact, deleteContact, fetchContacts, setFilter } from '../redux/appRedusers';
 
 const Phonebook = () => {
   const contacts = useSelector(state => state.appReduser.contacts);
-  const filter = useSelector(state => state.appReduser.filter);  
+  const filter = useSelector(state => state.appReduser.filter);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchContacts());
-  }, [dispatch]);
+  }, []);
 
-  const handleAddContact = (contact) => {
-    dispatch(addContact(contact));
+  const handleAddContact = async (contact) => {
+    await dispatch(addContact(contact)); 
+    dispatch(fetchContacts());
   };
 
-  const handleDeleteContact = (contactId) => {
-    dispatch(deleteContact(contactId));
+  const handleDeleteContact = async (contactId) => {
+    await dispatch(deleteContact(contactId)); 
+    dispatch(fetchContacts());
   };
 
   const handleFilterChange = (e) => {
@@ -47,3 +46,4 @@ const Phonebook = () => {
 };
 
 export default Phonebook;
+
