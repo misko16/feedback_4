@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+
 import ContactForm from "./ContactForm";
 import Filter from "../refactoring/Filter";
 import ContactList from "../refactoring/ContactList";
-import { addContact, deleteContact, fetchContacts, setFilter } from '../redux/appRedusers';
+import  { setFilter } from '../redux/appRedusers';
+import { fetchContacts, addContact, deleteContact } from 'servises/requestFunctions';
+
 
 const Phonebook = () => {
   const contacts = useSelector(state => state.appReduser.contacts);
