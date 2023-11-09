@@ -8,6 +8,7 @@ function RegisterPage() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -18,6 +19,7 @@ function RegisterPage() {
     } catch (error) {
       console.log('Registration error', error);
     }
+    reset();
   };
 
   return (

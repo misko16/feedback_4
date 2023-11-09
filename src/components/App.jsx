@@ -7,6 +7,12 @@ const Phonebook = lazy(() => import("./PhoneBook"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const RegisterPage = lazy(() => import("./pages/RegisterPage"));
 
+ export const appRoutes = [
+  {path:'/', element: <Phonebook/>},
+  {path:'/login', element: <LoginPage/>},
+  {path:'/register', element: <RegisterPage/>},
+]
+
 
 export const App = () => {
   return (
@@ -14,9 +20,7 @@ export const App = () => {
       <Navigation />
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
-          <Route path="/" element={<Phonebook />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+          {appRoutes.map(({path, element}) => (<Route key={path} path={path} element={element} />))};
         </Routes>
       </Suspense>
     </div>

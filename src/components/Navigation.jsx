@@ -31,11 +31,15 @@ const NavContainer = styled.div`
 
 const Navigation = () => {
   return (
+        <header>
+            <nav>
     <NavContainer>
       <StyledLink to="/">Contacts</StyledLink>
       <StyledLink to="/login">Login</StyledLink>
       <StyledLink to="/register">Register</StyledLink>
     </NavContainer>
+            </nav>
+        </header>
   );
 };
 
