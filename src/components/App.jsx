@@ -1,52 +1,23 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { Routes, Route } from "react-router-dom";
+import { lazy, Suspense } from "react";
 
-import ContactForm from "./ContactForm";
-import Filter from "../refactoring/Filter";
-import ContactList from "../refactoring/ContactList";
-import  { setFilter } from '../redux/appRedusers';
-import { fetchContacts, addContact, deleteContact } from 'servises/requestFunctions';
+const Navigation = lazy(() => import('./Navigation'));
+const Phonebook = lazy(() => import("./PhoneBook"));
+const LoginPage = lazy(() => import("./pages/LoginPage"));
+const RegisterPage = lazy(() => import("./pages/RegisterPage"));
 
 
-const Phonebook = () => {
-  const contacts = useSelector(state => state.appReduser.contacts);
-  const filter = useSelector(state => state.appReduser.filter);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, []);
-
-  const handleAddContact = async (contact) => {
-    await dispatch(addContact(contact)); 
-    dispatch(fetchContacts());
-  };
-
-  const handleDeleteContact = async (contactId) => {
-    await dispatch(deleteContact(contactId)); 
-    dispatch(fetchContacts());
-  };
-
-  const handleFilterChange = (e) => {
-    dispatch(setFilter(e.target.value));
-  };
-
-  const filteredContacts = Array.isArray(contacts.items)
-    ? contacts.items.filter((contact) =>
-        contact.name.toLowerCase().includes(filter.toLowerCase())
-      )
-    : [];
-
+export const App = () => {
   return (
-    <div className='container'>
-      <h1>Phonebook</h1>
-      <ContactForm contacts={contacts} onAddContact={handleAddContact} />
-      <h2>Contacts</h2>
-      <Filter value={filter} onChange={handleFilterChange} />
-      <ContactList contacts={filteredContacts} onDeleteContact={handleDeleteContact} />
+    <div>
+      <Navigation />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Phonebook />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 };
-
-export default Phonebook;
-
