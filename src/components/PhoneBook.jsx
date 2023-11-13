@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 import ContactForm from "./ContactForm";
 import Filter from "../refactoring/Filter";
 import ContactList from "../refactoring/ContactList";
-import  { setFilter } from '../redux/appRedusers';
-import { fetchContacts, addContact, deleteContact } from 'servises/requestFunctions';
+import {addContact, deleteContact, setFilter} from "redux/appRedusers";
 
 
 const Phonebook = () => {
@@ -14,39 +14,38 @@ const Phonebook = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchContacts());
-  }, []);
+    localStorage.setItem("contacts", JSON.stringify(contacts));
+  }, [contacts]);
 
-  const handleAddContact = async (contact) => {
-    await dispatch(addContact(contact)); 
-    dispatch(fetchContacts());
-  };
+  const handleaddContact = (name, number) => {
+    dispatch(addContact({name, number}));
+  };  
 
-  const handleDeleteContact = async (contactId) => {
-    await dispatch(deleteContact(contactId)); 
-    dispatch(fetchContacts());
+  const handledeleteContact = (contactId) => {
+   dispatch(deleteContact(contactId));
   };
+  
 
   const handleFilterChange = (e) => {
     dispatch(setFilter(e.target.value));
   };
 
-  const filteredContacts = Array.isArray(contacts.items)
-    ? contacts.items.filter((contact) =>
-        contact.name.toLowerCase().includes(filter.toLowerCase())
-      )
-    : [];
+  const filteredContacts = contacts.filter((contact) =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <div className='container'>
       <h1>Phonebook</h1>
-      <ContactForm contacts={contacts} onAddContact={handleAddContact} />
+      <ContactForm
+        contacts={contacts}
+        onAddContact={handleaddContact}
+      />
       <h2>Contacts</h2>
       <Filter value={filter} onChange={handleFilterChange} />
-      <ContactList contacts={filteredContacts} onDeleteContact={handleDeleteContact} />
+      <ContactList contacts={filteredContacts} onDeleteContact={handledeleteContact} />
     </div>
   );
 };
 
 export default Phonebook;
-

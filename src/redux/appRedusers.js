@@ -1,39 +1,44 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { fetchContacts } from "servises/requestFunctions";
+import { createSlice, nanoid } from "@reduxjs/toolkit";
+
 
 const appReducers = createSlice({
-  name: "appReducer",
+  name: 'appReducer',
   initialState: {
-    contacts: {
-      items: [],
-      isLoading: false,
-      error: null,
-    },
-    filter: "",
+    contacts: [],
+    filter: '',
   },
-
   reducers: {
+    addContact: (state, action) => {
+      const { name, number } = action.payload;
+    
+      if (!name || (typeof name === 'object' && !name.name)) {
+        console.error('Invalid name provided for a contact:', name);
+        return;
+      }
+    
+      const existingContact = state.contacts.find(
+        (contact) => contact.name && contact.name.toLowerCase() === name.name.toLowerCase()
+      );
+    
+      if (existingContact) {
+        alert(`${name.name} is already in contacts.`);
+        return;
+      }
+    
+      const id = nanoid();
+      state.contacts.push({ name: name.name, number, id });
+    },
+    
+     
+    deleteContact: (state, action) => {
+      const contactId = action.payload;
+      state.contacts = state.contacts.filter((contact) => contact.id !== contactId);
+    },
     setFilter: (state, action) => {
       state.filter = action.payload;
     },
   },
-
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchContacts.pending, (state) => {
-        state.contacts.isLoading = true;
-        state.contacts.error = null;
-      })
-      .addCase(fetchContacts.fulfilled, (state, action) => {
-        state.contacts.isLoading = false;
-        state.contacts.items = action.payload;
-      })
-      .addCase(fetchContacts.rejected, (state, action) => {
-        state.contacts.isLoading = false;
-        state.contacts.error = action.error.message;
-      });
-  },
 });
 
-export const { setFilter } = appReducers.actions;
+export const { addContact, deleteContact, setFilter } = appReducers.actions;
 export default appReducers.reducer;
