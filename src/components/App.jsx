@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Navigation from "./Navigation";
 import Phonebook from "./PhoneBook";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import { useDispatch } from "react-redux";
+import { refreshThunk } from "redux/authReduser";
 
 const appRoutes = [
   { path: '/', element: <Phonebook /> },
@@ -13,6 +15,9 @@ const appRoutes = [
 ];
 
 const App = () => {
+  const dispatch = useDispatch();
+  
+  useEffect(() => {dispatch(refreshThunk())},[dispatch]);
   return (
     <div>
       <Navigation />

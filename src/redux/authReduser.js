@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { loginRequire, registerRequire } from "servises/ApiRequests";
+import { loginRequire, refreshRequest, registerRequire, setToken } from "servises/ApiRequests";
 
 
 
@@ -27,6 +27,20 @@ export const registerThunk = createAsyncThunk(
     }
 )
 
+export const refreshThunk = createAsyncThunk(
+    'auth/refresh',
+    async(_, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.authRedusers.token;
+        try{
+            setToken(token);
+            const response = await refreshRequest();
+            return response;
+        } catch(error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+)
 
 const INITIAL_STATE = {
     token: null,
@@ -71,6 +85,18 @@ const INITIAL_STATE = {
         state.user = action.payload.user;
     })
         .addCase(loginThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+    })
+    //----------REFRESH------------------
+    .addCase(refreshThunk.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+    })
+        .addCase(refreshThunk.fulfilled, (state, action) => {
+        state.user = action.payload;
+    })
+        .addCase(refreshThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
     })
