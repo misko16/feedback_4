@@ -1,4 +1,4 @@
-import {  createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { fetchContacts } from "servises/requestFunctions";
 
 const appReducers = createSlice({
@@ -17,6 +17,7 @@ const appReducers = createSlice({
       state.filter = action.payload;
     },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(fetchContacts.pending, (state) => {

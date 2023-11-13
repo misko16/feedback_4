@@ -15,7 +15,7 @@ const RegisterPage = lazy(() => import("./pages/RegisterPage"));
 
 
 export const App = () => {
-  return (
+  return ( 
     <div>
       <Navigation />
       <Suspense fallback={<div>Loading...</div>}>

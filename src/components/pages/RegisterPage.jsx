@@ -1,8 +1,9 @@
 
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 
-import { registerRequire } from 'servises/ApiRequests';
+import { registerThunk } from 'redux/authReduser';
 
 function RegisterPage() {
   const {
@@ -12,15 +13,13 @@ function RegisterPage() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    try {
-      const response = await registerRequire(data);
-      console.log('Registration successful', response);
-    } catch (error) {
-      console.log('Registration error', error);
-    }
+const dispatch = useDispatch();
+
+  const onSubmit = (data) => {
+    dispatch(registerThunk(data));
+      console.log('Registration successful');
     reset();
-  };
+  }
 
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>

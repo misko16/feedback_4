@@ -1,23 +1,24 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { loginThunk } from "redux/authReduser";
 
-import { loginRequire } from "servises/ApiRequests";
 
 function LoginPage() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    try {
-      const response = await loginRequire(data);
-      console.log("login successful", response);
-    } catch (error) {
-      console.log("Login error", error);
-    }
-  };
+  const dispatch = useDispatch();
+
+  const onSubmit = (data) => {
+    dispatch(loginThunk(data));
+    console.log('Login successful');
+    reset();
+  }
 
   return (
     <form className="loginForm" onSubmit={handleSubmit(onSubmit)}>
