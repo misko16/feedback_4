@@ -76,4 +76,4 @@ const INITIAL_STATE = {
     })
 });
 
-export const authReduser = authSlise.reducer;
+export const authRedusers = authSlise.reducer;
