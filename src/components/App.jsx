@@ -1,12 +1,17 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { lazy, Suspense } from "react";
+// import { lazy, Suspense } from "react";
 // import { unstable_startTransition as startTransition } from 'react-dom';
 
-const Navigation = lazy(() => import('./Navigation'));
-const Phonebook = lazy(() => import("./PhoneBook"));
-const LoginPage = lazy(() => import("./pages/LoginPage"));
-const RegisterPage = lazy(() => import("./pages/RegisterPage"));
+// const Navigation = lazy(() => import('./Navigation'));
+// const Phonebook = lazy(() => import("./PhoneBook"));
+// const LoginPage = lazy(() => import("./pages/LoginPage"));
+// const RegisterPage = lazy(() => import("./pages/RegisterPage"));
+
+import Navigation from "./Navigation";
+import Phonebook from "./PhoneBook";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 
 const appRoutes = [
   { path: '/', element: <Phonebook /> },
@@ -18,21 +23,17 @@ const App = () => {
   return (
     <div>
       <Navigation />
-      <Suspense fallback={<div>Loading...</div>}>
+      {/* <Suspense fallback={<div>Loading...</div>}> */}
         <Routes>
           {appRoutes.map(({ path, element }) => (
             <Route
               key={path}
               path={path}
-              element={(
-                <Suspense fallback={<div>Loading...</div>}>
-                  {element}
-                </Suspense>
-              )}
+              element={element}
             />
           ))}
         </Routes>
-      </Suspense>
+      {/* </Suspense> */}
     </div>
   );
 };
