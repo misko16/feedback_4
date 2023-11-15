@@ -15,29 +15,28 @@ import appRedusers from "./appRedusers";
 import { authRedusers } from "./authReduser";
 
 const persistConfig = {
-    key: 'root',
-    storage,
-    whitelist: ['token'],
+  key: 'root',
+  storage,
+  whitelist: ['token'],
 };
-
 const rootReducer = combineReducers({
-    appReduser: appRedusers,
-    authReduser: persistReducer(persistConfig,authRedusers),
+  appReduser: appRedusers,
+  authReduser: persistReducer(persistConfig, authRedusers),
+});
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-const store = configureStore({
-    reducer: persistedReducer,
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({
-        serializableCheck: {
-          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-        },
-      }),
-  })
-  
+store.subscribe(() => {
+  console.log('Updated State:', store.getState());
+});
+console.log('Initial State:', store.getState());
 
 export const persistor = persistStore(store);
 export default store;
