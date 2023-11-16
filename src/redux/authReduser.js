@@ -33,7 +33,7 @@ export const refreshThunk = createAsyncThunk(
       const state = thunkAPI.getState();
       const token = state.authRedusers.token;
   
-      if (!token) {
+      if (token === null) {
         return thunkAPI.rejectWithValue('Unable to fetch user');
       }
   
