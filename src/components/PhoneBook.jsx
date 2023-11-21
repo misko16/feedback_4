@@ -1,51 +1,59 @@
 import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
+import {
+  selectContacts,
+  selectContactsIsLoading,
+} from '../redux/contacts.selectors';
+import {
+  addContact,
+  deleteContact,
+  fetchContacts,
+} from '../redux/contactsReduser';
+import PhoneBookForm from './PhoneBookForm';
 
-import ContactForm from "./ContactForm";
-import Filter from "../refactoring/Filter";
-import ContactList from "../refactoring/ContactList";
-import {addContact, deleteContact, setFilter} from "redux/appRedusers";
-
-
-const Phonebook = () => {
-  const contacts = useSelector(state => state.appReduser.contacts);
-  const filter = useSelector(state => state.appReduser.filter);
+const PhoneBook = () => {
+  const {
+    reset,
+    formState: { errors },
+  } = useForm();
   const dispatch = useDispatch();
+  const contacts = useSelector(selectContacts);
+  const isLoading = useSelector(selectContactsIsLoading);
 
   useEffect(() => {
-    localStorage.setItem("contacts", JSON.stringify(contacts));
-  }, [contacts]);
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
-  const handleaddContact = (name, number) => {
-    dispatch(addContact({name, number}));
-  };  
-
-  const handledeleteContact = (contactId) => {
-   dispatch(deleteContact(contactId));
-  };
-  
-
-  const handleFilterChange = (e) => {
-    dispatch(setFilter(e.target.value));
+  const onSubmit = async (contact) => {
+    try {
+      await dispatch(addContact(contact));
+      reset();
+    } catch (error) {
+      console.error('Failed to add contact:', error.message);
+    }
   };
 
-  const filteredContacts = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
+  const onDeleteContact = async (contactId) => {
+    try {
+      await dispatch(deleteContact(contactId));
+    } catch (error) {
+      console.error('Failed to delete contact:', error.message);
+    }
+  };
 
   return (
-    <div className='container'>
-      <h1>Phonebook</h1>
-      <ContactForm
-        contacts={contacts}
-        onAddContact={handleaddContact}
-      />
-      <h2>Contacts</h2>
-      <Filter value={filter} onChange={handleFilterChange} />
-      <ContactList contacts={filteredContacts} onDeleteContact={handledeleteContact} />
-    </div>
+    <div>
+    <PhoneBookForm
+      onSubmit={onSubmit}
+      errors={errors}  
+      contacts={contacts}
+      isLoading={isLoading}
+      onDeleteContact={onDeleteContact}
+    />
+  </div>
   );
 };
 
-export default Phonebook;
+export default PhoneBook;

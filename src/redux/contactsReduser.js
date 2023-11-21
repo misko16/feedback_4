@@ -77,7 +77,6 @@ export const fetchContacts = createAsyncThunk(
             contact => contact.id !== action.payload.id
           );
         })
-  
         .addMatcher(
           isAnyOf(
             fetchContacts.pending,
@@ -104,3 +103,4 @@ export const fetchContacts = createAsyncThunk(
   
   export const { setFilterTerm } = contactsSlice.actions;
   export const contactsReducer = contactsSlice.reducer;
+  

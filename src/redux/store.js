@@ -22,7 +22,7 @@ const persistConfig = {
 };
 const rootReducer = combineReducers({
   appReduser: appRedusers,
-  contactsStore: contactsReducer,
+  contactStore: contactsReducer,
   authReduser: persistReducer(persistConfig, authRedusers),
 });
 const store = configureStore({

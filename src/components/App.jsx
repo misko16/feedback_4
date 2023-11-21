@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 
 import Navigation from "./Navigation";
-import Phonebook from "./PhoneBook";
+import PhoneBook from "./PhoneBook";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import { refreshThunk } from "redux/authReduser";
@@ -20,7 +20,7 @@ const appRoutes = [
    </RestrictedRoute>) },
   { path: '/contacts', element: 
    (<PrivateRoute>
-    <Phonebook />
+    <PhoneBook />
     </PrivateRoute>) }, 
 
   { path: '/login', element:(
