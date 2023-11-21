@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { loginRequire, refreshRequest, registerRequire, setToken } from "servises/ApiRequests";
+import { logOutRequest, loginRequire, refreshRequest, registerRequire, setToken } from "servises/ApiRequests";
 
 
 
@@ -46,8 +46,19 @@ export const refreshThunk = createAsyncThunk(
       }
     }
   );
+
   
-  
+export const logOutThunk = createAsyncThunk(
+    'auth/logOut',
+    async( _, thunkAPI) => {
+        try{
+            await logOutRequest();
+            return ;
+        } catch(error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+);
 const INITIAL_STATE = {
     token: null,
     user: {
@@ -105,7 +116,19 @@ const INITIAL_STATE = {
         .addCase(refreshThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-    })
+        })
+        //----------LogOut------------------
+        .addCase(logOutThunk.pending, state => {
+            state.isLoading = true;
+            state.error = null;
+        })
+            .addCase(logOutThunk.fulfilled, () => {
+                return INITIAL_STATE;
+        })
+            .addCase(logOutThunk.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        })
 });
 
 export const authRedusers = authSlise.reducer;

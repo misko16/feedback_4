@@ -13,6 +13,7 @@ import storage from 'redux-persist/lib/storage';
 
 import appRedusers from "./appRedusers";
 import { authRedusers } from "./authReduser";
+import { contactsReducer } from "./contactsReduser";
 
 const persistConfig = {
   key: 'root',
@@ -21,6 +22,7 @@ const persistConfig = {
 };
 const rootReducer = combineReducers({
   appReduser: appRedusers,
+  contactsStore: contactsReducer,
   authReduser: persistReducer(persistConfig, authRedusers),
 });
 const store = configureStore({

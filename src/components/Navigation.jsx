@@ -1,9 +1,10 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 import { selectAuthAuthenticated } from "redux/auth.selectors";
+import { logOutThunk } from "redux/authReduser";
 
 const StyledLink = styled(NavLink)`
   text-decoration: none;
@@ -36,15 +37,19 @@ const NavContainer = styled.div`
 const Navigation = () => {
   const authunticated = useSelector(selectAuthAuthenticated);
   console.log(`authunticated`, authunticated);
+  
+  const dispatch = useDispatch();
+  const onLogOut = () => {dispatch(logOutThunk())};
   return (
         <header>
             <nav>
     <NavContainer>
       {authunticated ? (
       <>      
-      <StyledLink to="/">Contacts</StyledLink>
-      <button>Log out</button>
+      <StyledLink to="/contacts">Contacts</StyledLink>
+      <button onClick={onLogOut}>Log out</button>
       </>) : ( <>
+      <StyledLink to='/'>Home</StyledLink>
         <StyledLink to="/login">Login</StyledLink>
       <StyledLink to="/register">Register</StyledLink>
       </>)}
