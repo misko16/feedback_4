@@ -1,0 +1,53 @@
+/* PhoneBookForm.css */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .filterInput {
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .label {
+    font-size: 18px;
+    margin-right: 10px;
+  }
+  
+  .submitButton {
+    margin-top: 15px;
+  }
+  
+  .contactList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .contactItem {
+    margin-bottom: 10px;
+  }
+  
+  .name {
+    font-size: 20px;
+    margin-right: 10px;
+  }
+  
+  .number {
+    font-size: 16px;
+    margin-right: 10px;
+  }
+  
+  .errorText {
+    font-size: 14px;
+    color: red;
+  }
+  

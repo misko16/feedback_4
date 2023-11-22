@@ -1,8 +1,8 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { loginThunk } from "redux/authReduser";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 
+import { loginThunk } from 'redux/authReduser';
 
 function LoginPage() {
   const {
@@ -18,28 +18,32 @@ function LoginPage() {
     dispatch(loginThunk(data));
     console.log('Login successful');
     reset();
-  }
+  };
 
   return (
     <form className="loginForm" onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <h2 className="loginForm__title">Email</h2>
-        <input className="loginForm__inputField" placeholder="Write your email" {...register("email")} required />
+      <div className="formField">
+        <label className="formLabel">Email:</label>
+        <input className="formInput" placeholder="Write your email" {...register('email')} required />
       </div>
 
-      <div>
-        <h2 className="loginForm__title">Password</h2>
+      <div className="formField">
+        <label className="formLabel">Password:</label>
         <input
-          className="loginForm__inputField"
+          className="formInput"
           placeholder="Write your password"
-          {...register("password", { required: true, minLength: 6 })}
+          {...register('password', { required: true, minLength: 6 })}
           type="password"
           required
         />
-        {errors.password && <span className="loginForm__errorText">Password must be at least 6 characters long</span>}
+        {errors.password && (
+          <p className="formErrorText">Password must be at least 6 characters long</p>
+        )}
       </div>
 
-      <input className="loginForm__submitButton" type="submit" value="Submit" />
+      <button className="formButton" type="submit">
+        Submit
+      </button>
     </form>
   );
 }

@@ -1,60 +1,47 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
+import { useForm } from 'react-hook-form';
 
 import Loader from './Loader';
 
 const PhoneBookForm = ({ onSubmit, contacts, isLoading, onDeleteContact }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors: formErrors },
-  } = useForm();
+  const { register, handleSubmit, formState: { errors: formErrors } } = useForm();
 
   const handleFormSubmit = (data) => {
     onSubmit(data);
   };
 
   return (
-    <div className='container'>
-      <form className='form' onSubmit={handleSubmit(handleFormSubmit)}>
+    <div className="container">
+      <form className="form" onSubmit={handleSubmit(handleFormSubmit)}>
         <label>
-        <span>Ім&#39;я:</span>
-          <input
-            className='filterInput'
-            {...register('name', { required: true })}
-            type='text'
-          />
-          {formErrors.name && <span>Це поле є обов&#39;язковим</span>}
+          <div className="filterInput">
+            <span className="label">Ім&apos;я:</span>
+            <input {...register('name', { required: true })} type="text" />
+          </div>
+          {formErrors.name && <div className="errorText">Це поле є обов&apos;язковим</div>}
         </label>
         <label>
-          <span>Номер:</span>
-          <input
-            className='filterInput'
-            {...register('number', { required: true })}
-            type='text'
-          />
-          {formErrors.number && <span>Це поле є обов&#39;язковим</span>}
+          <div className="filterInput">
+            <span className="label">Номер:</span>
+            <input {...register('number', { required: true })} type="text" />
+          </div>
+          {formErrors.number && <div className="errorText">Це поле є обов&apos;язковим</div>}
         </label>
 
-        <button className='submitButton' type='submit'>
+        <button className="submitButton" type="submit">
           Додати контакт
         </button>
       </form>
 
       {isLoading && <Loader />}
-      <ul className='contactList'>
+      <ul className="contactList">
         {Array.isArray(contacts) &&
           contacts.map((contact) => (
-            <li className='contactItem' key={contact.id}>
-              <h3>{contact.name}</h3>
-              <p>{contact.number}</p>
-              <button
-                className='delete'
-                onClick={() => onDeleteContact(contact.id)}
-              >
-                ❌
-              </button>
+            <li key={contact.id} className="contactItem">
+              <span className="name">{contact.name}</span>
+              <span className="number">{contact.number}</span>
+              <button onClick={() => onDeleteContact(contact.id)}>❌</button>
             </li>
           ))}
       </ul>
@@ -63,10 +50,10 @@ const PhoneBookForm = ({ onSubmit, contacts, isLoading, onDeleteContact }) => {
 };
 
 PhoneBookForm.propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-    contacts: PropTypes.array.isRequired,
-    isLoading: PropTypes.bool.isRequired,
-    onDeleteContact: PropTypes.func.isRequired,
-  };
+  onSubmit: PropTypes.func.isRequired,
+  contacts: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  onDeleteContact: PropTypes.func.isRequired,
+};
 
 export default PhoneBookForm;

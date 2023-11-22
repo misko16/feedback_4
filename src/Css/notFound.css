@@ -1,0 +1,9 @@
+/* NotFound.css */
+
+.notFoundMessage {
+    font-size: 20px;
+    color: red;
+    text-align: center;
+    margin-top: 50px;
+  }
+  
