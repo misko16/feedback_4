@@ -14,23 +14,24 @@ const PhoneBookForm = ({ onSubmit, contacts, isLoading, onDeleteContact }) => {
   return (
     <div className="container">
       <form className="form" onSubmit={handleSubmit(handleFormSubmit)}>
+       <div className='contactsInformation'>
         <label>
           <div className="filterInput">
-            <span className="label">Ім&apos;я:</span>
-            <input {...register('name', { required: true })} type="text" />
+            <span className="label">Name:</span>
+            <input {...register('name', { required: true })} type="text" className='input'/>
           </div>
           {formErrors.name && <div className="errorText">Це поле є обов&apos;язковим</div>}
         </label>
         <label>
           <div className="filterInput">
-            <span className="label">Номер:</span>
-            <input {...register('number', { required: true })} type="text" />
+            <span className="label">Number:</span>
+            <input {...register('number', { required: true })} type="text" className='input'/>
           </div>
           {formErrors.number && <div className="errorText">Це поле є обов&apos;язковим</div>}
         </label>
-
+        </div>
         <button className="submitButton" type="submit">
-          Додати контакт
+          Add contact
         </button>
       </form>
 
@@ -41,7 +42,7 @@ const PhoneBookForm = ({ onSubmit, contacts, isLoading, onDeleteContact }) => {
             <li key={contact.id} className="contactItem">
               <span className="name">{contact.name}</span>
               <span className="number">{contact.number}</span>
-              <button onClick={() => onDeleteContact(contact.id)}>❌</button>
+              <button onClick={() => onDeleteContact(contact.id)} className="deleteButton">❌</button>
             </li>
           ))}
       </ul>

@@ -1,53 +1,108 @@
+.form {
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.contactsInformation{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.input{
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.filterInput {
+  padding: 8px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  border: none;
+}
+
+
+.label {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.errorText {
+  font-size: 14px;
+  color: red;
+  margin-top: 4px;
+}
+
+.inputField {
+  padding: 8px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 15px;
+}
+
+.submitButton {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #2ecc71;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+}
+.submitButton:hover {
+  background-color: #27ae60;
+}
+
+.contactList {
+  list-style: none;
+  padding: 0;
+}
+
 /* PhoneBookForm.css */
 
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .filterInput {
-    padding: 8px;
-    margin-bottom: 10px;
-  }
-  
-  .label {
-    font-size: 18px;
-    margin-right: 10px;
-  }
-  
-  .submitButton {
-    margin-top: 15px;
-  }
-  
-  .contactList {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .contactItem {
-    margin-bottom: 10px;
-  }
-  
-  .name {
-    font-size: 20px;
-    margin-right: 10px;
-  }
-  
-  .number {
-    font-size: 16px;
-    margin-right: 10px;
-  }
-  
-  .errorText {
-    font-size: 14px;
-    color: red;
-  }
-  
+.contactItem {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  padding: 10px; /* Додав падінг для збільшення простору */
+  border-radius: 5px; /* Додав закруглені кути */
+}
+
+.contactItem:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тінь при наведенні */
+}
+
+/* PhoneBookForm.css */
+
+.deleteButton {
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.deleteButton:hover {
+  background-color: #217e48;
+}
+
+
+.name {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.number {
+  font-size: 16px;
+  margin-right: 10px;
+}

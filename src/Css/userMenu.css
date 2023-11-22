@@ -1,18 +1,26 @@
-.user-menu {
+/* YourExistingStyles.css */
+
+.user-menu-container {
   display: flex;
   align-items: center;
+  padding: 10px;
+  background-color: #f9f9f9; /* Змінив колір фону для контейнера */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Додав тінь для виділення */
 }
 
 .welcome-text {
   font-size: 16px;
-  margin-right: 10px;
 }
 
 .logout-button {
-  margin-left: auto;
   background-color: #2ecc71;
+  width: 100px;
   border: none;
   color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .logout-button:hover {
