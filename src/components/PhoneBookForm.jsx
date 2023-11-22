@@ -19,13 +19,13 @@ const PhoneBookForm = ({ onSubmit, contacts, isLoading, onDeleteContact }) => {
     <div className='container'>
       <form className='form' onSubmit={handleSubmit(handleFormSubmit)}>
         <label>
-          <span>Ім'я:</span>
+        <span>Ім&#39;я:</span>
           <input
             className='filterInput'
             {...register('name', { required: true })}
             type='text'
           />
-          {formErrors.name && <span>Це поле є обов'язковим</span>}
+          {formErrors.name && <span>Це поле є обов&#39;язковим</span>}
         </label>
         <label>
           <span>Номер:</span>
@@ -34,7 +34,7 @@ const PhoneBookForm = ({ onSubmit, contacts, isLoading, onDeleteContact }) => {
             {...register('number', { required: true })}
             type='text'
           />
-          {formErrors.number && <span>Це поле є обов'язковим</span>}
+          {formErrors.number && <span>Це поле є обов&#39;язковим</span>}
         </label>
 
         <button className='submitButton' type='submit'>
