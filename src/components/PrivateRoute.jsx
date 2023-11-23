@@ -1,25 +1,17 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from './hooks/auth';
 
-import { selectAuthAuthenticated } from 'redux/auth.selectors';
-
-const PrivateRoute = ({ children, redirectTo = '/login' }) => {
-  const authenticated = useSelector(selectAuthAuthenticated);
-  const navigate = useNavigate();
-
-  React.useEffect(() => {
-    if (!authenticated) {
-      navigate(redirectTo, { replace: true });
-    }
-  }, [authenticated, navigate, redirectTo]);
-
-  return authenticated ? children : null;
-};  
-PrivateRoute.propTypes = {
-  children: PropTypes.node.isRequired,
-  redirectTo: PropTypes.string.isRequired,
+const PrivatRoute = ({ component: Component, redirectTo = '/' }) => {
+  const { isLoggedIn, isRefreshing } = useAuth();
+  const shouldRedirect = !isLoggedIn && !isRefreshing;
+  return shouldRedirect ? <Navigate to={redirectTo} /> : <Component />;
 };
 
-export default PrivateRoute;
+PrivatRoute.propTypes = {
+  component: PropTypes.elementType.isRequired,
+  redirectTo: PropTypes.string,
+};
+
+export default PrivatRoute;

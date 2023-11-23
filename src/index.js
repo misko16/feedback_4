@@ -6,7 +6,7 @@ import   {persistor}  from "./redux/store"
 import store from "./redux/store";
 
 
-import App from 'components/App';
+import {App} from 'components/App';
 import './Css/index.css';
 import { BrowserRouter } from 'react-router-dom';
 

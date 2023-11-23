@@ -12,7 +12,7 @@ import {
 import storage from 'redux-persist/lib/storage';
 
 import appRedusers from "./appRedusers";
-import { authRedusers } from "./authReduser";
+import { authReducers } from "./auth/authReduser";
 import { contactsReducer } from "./contactsReduser";
 
 const persistConfig = {
@@ -23,7 +23,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   appReduser: appRedusers,
   contactStore: contactsReducer,
-  authReduser: persistReducer(persistConfig, authRedusers),
+  authReduser: persistReducer(persistConfig, authReducers),
 });
 const store = configureStore({
   reducer: rootReducer,

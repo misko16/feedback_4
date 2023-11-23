@@ -1,59 +1,54 @@
-import React, { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { lazy, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 
-import Navigation from "./Navigation";
-import PhoneBook from "./PhoneBook";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import { refreshThunk } from "redux/authReduser";
-import { NotFound } from "./pages/NotFound";
-import { Home } from "./pages/Home";
-import RestrictedRoute from "./RestrictedRoute";
-import PrivateRoute from "./PrivateRoute";
+import { Navigation } from './navigation/Navigation';
+import { refreshThunk } from '../redux/auth/operations';
+import { useAuth } from './hooks/auth';
+import { Update } from './update/update';
+import  RestrictedRoute  from '../components/RestrictedRoute';
+import  PrivatRoute  from './PrivateRoute';
 
-const appRoutes = [
-  { path: '/', element: (
-    <RestrictedRoute >
-    <Home />
-   </RestrictedRoute>) },
-  { path: '/contacts', element: 
-   (<PrivateRoute>
-    <PhoneBook />
-    </PrivateRoute>) }, 
+const Contacts = lazy(() => import('./PhoneBook'));
+const Register = lazy(() => import('./pages/RegisterPage'));
+const Login = lazy(() => import('./pages/LoginPage'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
-  { path: '/login', element:(
-   <RestrictedRoute >
-      <LoginPage />
-    </RestrictedRoute>)},
-
-  { path: '/register', element:(
-   <RestrictedRoute >
-      <RegisterPage />
-     </RestrictedRoute>)},
-
-  { path: '*', element: <NotFound message={`Not Found`}/> },
-];
-
-const App = () => {
+export const App = () => {
   const dispatch = useDispatch();
-  
-  useEffect(() => {dispatch(refreshThunk())},[dispatch]);
-  return (
-    <div>
-      <Navigation />
-        <Routes>
-          {appRoutes.map(({ path, element }) => (
-            <Route
-              key={path}
-              path={path}
-              element={element}
-            />
-          ))}
-        </Routes>
-    </div>
+  const { isRefreshing } = useAuth();
+
+  useEffect(() => {
+    dispatch(refreshThunk());
+  }, [dispatch]);
+
+  return isRefreshing ? (
+    <Update />
+  ) : (
+    <Routes>
+      <Route path="/" element={<Navigation />}>
+        <Route
+          index
+          element={<PrivatRoute component={Contacts} redirectTo="/login" />}
+        />
+        <Route
+          path="contacts"
+          element={<PrivatRoute component={Contacts} redirectTo="/login" />}
+        />
+        <Route
+          path="register"
+          element={
+            <RestrictedRoute component={Register} redirectTo="/contacts" />
+          }
+        />
+        <Route
+          path="login"
+          element={<RestrictedRoute component={Login} redirectTo="/contacts" />}
+        />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
   );
 };
-
-export default App;

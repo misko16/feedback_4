@@ -1,12 +1,11 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { logOutThunk } from 'redux/authReduser';
-import { selectAuthUserData } from 'redux/auth.selectors';
-
+import { logOutThunk } from 'redux/auth/operations';
+import { selectUser } from 'redux/auth/auth.selectors';
 const UserMenu = () => {
   const dispatch = useDispatch();
-  const user = useSelector(selectAuthUserData);
+  const user = useSelector(selectUser);
 
   const onLogOut = () => {
     dispatch(logOutThunk());
